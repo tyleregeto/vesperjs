@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>vesperjs demo</title>
+	<link rel="stylesheet" type="text/css" href="example.css">
+	<link rel="stylesheet" type="text/css" href="../main.css">
+	<script type="text/javascript" src="../main.js"></script>
+</head>
+<body>
+	<header>
+		<h1>versperjs mention autocompete/insertion example</h1>
+		<a href="#">View on Github</a>
+	</header>
+	
+	<h2>In a text area (type '@')</h2>
+	<textarea id="textbox" placeholder="Type here..."></textarea>
+
+	<h2>In contentEditable (type '@')</h2>
+	<div id="textbox2" class="te-content-editable" contentEditable placeholder="Type here..."></div>
+
+	<script type="text/javascript">
+	// Add username completion
+	te.newMentionListener('textbox', {
+		triggerCharacter: '@',
+		data: ["bob", "sam", "bort", "homer", "marge", "maggie", "lisa", "sean connery", "timothy dalton", "roger moore"],
+	});
+
+	// Add username completion to contentEdtable
+	te.newMentionListener('textbox2', {
+		triggerCharacter: '@',
+		insertTmpl: '<a href="#">@{value}</a>',
+		data: ["bob", "sam", "bort", "bort2", "homer", "marge", "maggie", "lisa", "sean connery", "timothy dalton", "roger moore"],
+	});
+
+	// Add emoji completion
+	te.newMentionListener('textbox', {
+		triggerCharacter: ':',
+		insertTmpl: ':{value}:',
+		data: ['smile', 'shrug', 'dog', 'kitten', 'OddJob'],
+	});
+	</script>
+</body>
+</html>
