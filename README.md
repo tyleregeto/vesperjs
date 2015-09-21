@@ -1,2 +1,2 @@
 # vesperjs
-A library for adding mention auto complete/insertion, ie @user #tag :emoji
+A library for adding mention autocomplete/insertion, ie @user #tag :emoji
