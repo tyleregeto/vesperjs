@@ -3,7 +3,7 @@ A library for adding mention autocomplete/insertion, ie @user #tag :emoji
 
 # Getting started
 
-```
+```javascript
 <div id="myEditableContent" contentEditable></div>
 
 <script type="text/javascript">
