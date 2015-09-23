@@ -1,17 +1,30 @@
 'use strict';
 
-// TODO position auto complete menu at caret position
-// TODO remove list from DOM if empty
 // TODO deleting needs to cleanup mention tags (contentEditable)
 // TODO after insert, a single back space should remove the last name, a second backspace should remove everything up to the '@' character
 // TODO support callback match finding, needs to work with AJAX requests
 // TODO iframe support (eg: CKEditor)
+// TODO minLen param, only autocompletes after this many chars
+// TOOD sanitize values before inserting into template (make it a config setting, default on)
+// TODO you should be able to pass a view in, that way it can be overridden
+// TODO config setting to determine if tab/enter select mention
 
-'use strict';
+var te = te || {};
 
-var te = {};
+te.parseTemplate = function(data, tmpl) {
+    if(typeof(data) === 'string') {
+        data = {value: data};
+    }
 
-te.newMentionListener = function(targetId, spec) {
+    var keys = Object.keys(data);
+    for (var i = 0; i < keys.length; i++) {
+        var k = keys[i];
+        tmpl = tmpl.replace(new RegExp('{'+k+'}', 'g'), data[k]);
+    }
+    return tmpl;
+};
+
+te.newMentionListener = function(targetNode /*node or ID*/, spec) {
     spec = spec || {};
 
     var target = null;
@@ -20,13 +33,13 @@ te.newMentionListener = function(targetId, spec) {
     var insertTmpl = spec.insertTmpl || (trigChar + '{value}');
     var insertEmptySpaceAfter = spec.spaceAfterInsert || false;
     // When looking for @ starts, only look back `maxChar` from the caret position
-    var maxChar = 20;
+    var maxChar = spec.maxLen || 20;
     // Note: an empty class name is valid, but you won't be able to edit
     // mentions if the template contains an anchor tag in that case.
     // This is because we can't tell the origin of the anchor tag.
     // TODO expect this class in the template
     var mentionTagClassName = spec.mentionClassName || 'te-mention';
-    var view = te.newMentionListView(onMentionSelection, spec.escapeCloseLength || 3000);
+    var view = null;
     var termMatch = null;
     var pluginData = null;
 
@@ -38,14 +51,19 @@ te.newMentionListener = function(targetId, spec) {
     };
 
     function init() {
-        target = document.getElementById(targetId);
+        if(typeof(targetNode) === 'string') {
+            targetNode = document.getElementById(targetNode);
+        }
 
+        target = targetNode;
+        
         if(target.tagName.toLowerCase() === 'textarea') {
             plugin = te.newMentionTextareaPlugin(target);
         } else if(target.hasAttribute('contentEditable') && target.getAttribute('contentEditable') !== 'false') {
             plugin = te.newMentionContentEditablePlugin(target);
         }
 
+        view = te.newMentionListView(onMentionSelection, plugin.type(), spec.escapeCloseLength || 3000);
         target.addEventListener('input', onInput);
         target.addEventListener('keydown', onKeyDown);
         target.addEventListener('click', onClick);
@@ -74,6 +92,8 @@ te.newMentionListener = function(targetId, spec) {
     function onKeyDown(e) {
         var dirty = false;
         var key = e.key || e.keyIdentifier;
+        
+        // TODO switch to char codes to save bytes?
         switch(key) {
         case 'Up':
         case 'Down':
@@ -103,31 +123,16 @@ te.newMentionListener = function(targetId, spec) {
         termMatch = findTerm(value.text, value.caretIndex);
 
         if(termMatch) {
-            showMatches(findMatches(termMatch.term));
+            view.setList(findMatches(termMatch.term), plugin.getMenuPosition(termMatch.start));
         } else {
             // clear any existing matches in view
-            showMatches([]);
+            view.setList([]);
         }
-    }
-
-    function parseInsertTemplate(data) {
-        var keys = Object.keys(data);
-        var res = insertTmpl;
-        for (var i = 0; i < keys.length; i++) {
-            var k = keys[i];
-            res = res.replace('{'+k+'}', data[k]);
-        }
-
-        return res;
     }
 
     // called from the view when the user selects a mention
     function onMentionSelection(data) {
-        if(typeof(data) === 'string') {
-            data = {value: data};
-        }
-
-        var tag = parseInsertTemplate(data);
+        var tag = te.parseTemplate(data, insertTmpl);
         plugin.insert(tag, termMatch, insertEmptySpaceAfter, pluginData);
     }
 
@@ -177,10 +182,6 @@ te.newMentionListener = function(targetId, spec) {
         }
         return matches;
     }
-
-    function showMatches(list) {
-        view.setList(list);
-    }
 };
 
 te.newMentionTextareaPlugin = function(textarea) {
@@ -188,6 +189,8 @@ te.newMentionTextareaPlugin = function(textarea) {
         getValue: getValue,
         insert: insert,
         destory: destory,
+        getMenuPosition: getMenuPosition,
+        type: function(){return 'te-mention-textarea';},
     };
 
     // get value should return an object with the follow definition:
@@ -210,6 +213,14 @@ te.newMentionTextareaPlugin = function(textarea) {
         textarea.selectionEnd = newCaretPos;
     }
 
+    function getMenuPosition(/*start*/) {
+        // TODO currently we position it to the text area bottom-left,
+        // we should return the real x/y position. We can do this with
+        // an (gross) off screen div with the same styles.
+        var rect = textarea.getClientRects()[0];
+        return {top: rect.bottom, left: rect.left};
+    }
+
     function destory() {
         
     }
@@ -220,6 +231,8 @@ te.newMentionContentEditablePlugin = function() {
         getValue: getValue,
         insert: insert,
         destory: destory,
+        getMenuPosition: getMenuPosition,
+        type: function(){return 'te-mention-content-editable';},
     };
 
     function getValue() {
@@ -236,9 +249,12 @@ te.newMentionContentEditablePlugin = function() {
     }
 
     function insert(tag, metrics, spaceAfterInsert, data) {
+        /*
+        // TODO handle this case
         if(data.anchorNode.nodeType !== Node.TEXT_NODE) {
             console.log('not a text node: ', data.anchorNode);
         }
+        */
 
         // the mention template we are inserting
         var mention = document.createElement('div');
@@ -251,7 +267,6 @@ te.newMentionContentEditablePlugin = function() {
         // We want to replace it. If its a different anchor, we should not be auto completing on it
 
         // strip the text the user started typing in.
-        // TODO what if the element is not a Text Node?
         if(data.anchorNode.nodeType ===  Node.TEXT_NODE) {
             range.setStart(data.anchorNode, metrics.start);
             range.setEnd(data.anchorNode, metrics.end);
@@ -274,15 +289,28 @@ te.newMentionContentEditablePlugin = function() {
         range.selectNode(lastNewElement);
         range.collapse();
         sel.addRange(range);
+    }
 
+    function getMenuPosition(start) {
+        // TODO this is not safe, need to test for range and selection
+        var sel = window.getSelection();
+        var range = sel.getRangeAt(0);
+        range.cloneRange();
+        range.setStart(range.startContainer, start);
+
+        var bounds = range.getClientRects();
+        if(bounds && bounds[0]) {
+            return {top: bounds[0].top, left: bounds[0].left};
+        }
+        return {left:0, top:0};
     }
 
     function destory() {
-
+        // TODO implement this
     }
 };
 
-te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
+te.newMentionListView = function(onItemSelect /*func*/, typeClass, escapeCloseLength) {
     var cursorPos = 0;
     var numItems = 0;
     var items = null;
@@ -290,19 +318,28 @@ te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
     var isVisible = false;
     var wrapper = document.createElement('div');
     var list = document.createElement('ul');
+    // TODO this needs to be configurable
     var rowTmpl = '<b>Name:</b> {value}';
     // when the list was last closed by pressing escape
     var closedAt = 0;
 
     list.className = 'te-mentions-list-results';
     list.addEventListener('click', onListClick);
-    wrapper.className = 'te-mentions-list';
+    wrapper.className = 'te-mentions-list ' + typeClass;
     wrapper.appendChild(list);
     document.body.appendChild(wrapper);
 
     window.addEventListener('keydown', onKeyDown, true);
 
-    function setList(itemData) {
+
+    function destroy() {
+        document.body.removeChild(wrapper);
+        window.removeEventListener('keydown', onKeyDown);
+    }
+
+    function setList(itemData, position) {
+        // TODO this needs to make sure the menu is within screen bounds
+
         // Pressing escape when the auto complete menu is open hides it
         // for this length of time
         if(Date.now() - closedAt < escapeCloseLength) {
@@ -325,6 +362,9 @@ te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
             return;
         }
 
+        wrapper.style.top = position.top;
+        wrapper.style.left = position.left;
+
         // add new matches
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
@@ -335,7 +375,7 @@ te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
                 listItem.className = 'te-active';
             }
 
-            listItem.innerHTML = parseTemplate(item);
+            listItem.innerHTML = te.parseTemplate(item, rowTmpl);
             list.appendChild(listItem);
             listItems.push(listItem);
         }
@@ -386,20 +426,6 @@ te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
         onItemSelect(item);
     }
 
-    function parseTemplate(data) {
-        if(typeof(data) === 'string') {
-            data = {value: data};
-        }
-
-        var keys = Object.keys(data);
-        var res = rowTmpl;
-        for (var i = 0; i < keys.length; i++) {
-            var k = keys[i];
-            res = res.replace('{'+k+'}', data[k]);
-        }
-        return res;
-    }
-
     function onKeyDown(e) {
         if(!isVisible) {
             return;
@@ -408,6 +434,7 @@ te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
         var key = e.key || e.keyIdentifier;
         var handled = false;
 
+        // TODO switch to char codes to save bytes?
         switch(key) {
         case 'Up':
         case 'ArrowUp':
@@ -420,11 +447,13 @@ te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
             moveCusor(cursorPos + 1);
             break;
         case 'Enter':
+        case 'Tab':
+        case 'U+0009'://chrome tab
             handled = true;
             selectItem(cursorPos);
             break;
         case 'Escape':
-        case 'U+001B':
+        case 'U+001B'://chrome escape
             // clear the current list
             setList([]);
             // we have to clear before setting this time
@@ -451,10 +480,6 @@ te.newMentionListView = function(onItemSelect /*func*/, escapeCloseLength) {
         
         e.stopImmediatePropagation();
         e.preventDefault();
-    }
-
-    function destroy() {
-        window.removeEventListener('keydown', onKeyDown);
     }
 
     // return interface

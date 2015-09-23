@@ -4,11 +4,15 @@ working, you should customize/replace to your applications needs
 */
 
 .te-mentions-list {
-	margin-top: 20px;
+	&.te-mention-content-editable {
+		margin-top: 20px;
+	}
+	
 	max-height: 150px;
 	overflow-y: scroll;
 	display: inline-block;
 	box-shadow: 0 0 7px rgba(0,0,0,0.6);
+	position: absolute;
 }
 
 .te-mentions-list-results {
@@ -17,15 +21,16 @@ working, you should customize/replace to your applications needs
 	list-style: none;
 	border-bottom: 1px solid #ddd;
 	display: inline-block;
-}
+	background: #fff;
 
-.te-mentions-list-results li {
-	border: 1px solid #ddd;
-	border-bottom: none;
-	padding: 5px;
-	min-width: 150px;
-}
+	li {
+		border: 1px solid #ddd;
+		border-bottom: none;
+		padding: 5px;
+		min-width: 150px;
 
-.te-mentions-list-results li.te-active {
-	background: #ccccff;
+		&.te-active {
+			background: #ccccff;
+		}
+	}
 }
