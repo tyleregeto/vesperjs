@@ -5,6 +5,7 @@ body {
   font:1em Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#333;
   font-weight:300;
+  line-height: 1.5;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -39,7 +40,7 @@ a {
 }
 
 a small {
-  font-size:11px;
+  font-size:0.75em;
   color:#777;
   margin-top:-0.6em;
   display:block;
@@ -58,8 +59,8 @@ blockquote {
 }
 
 code, pre {
-  font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
-  color:#333;
+  font-family:consolas, ubuntu, sans-serif;
+  color:#444;
   font-size:0.875em;
 }
 
