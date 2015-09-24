@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Vesperjs : A library for adding mention auto complete/insertion, ie @username #tag :emoji">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Vesperjs</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/tyleregeto/vesperjs">View on GitHub</a>
+
+          <h1 id="project_title">Vesperjs</h1>
+          <h2 id="project_tagline">A library for adding mention auto complete/insertion, ie @username #tag :emoji</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/tyleregeto/vesperjs/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/tyleregeto/vesperjs/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="vesperjs" class="anchor" href="#vesperjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>vesperjs</h1>
+
+<p>A library for adding mention autocomplete/insertion, ie <a href="https://github.com/user" class="user-mention">@user</a> #tag :emoji</p>
+
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started</h1>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>div id<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>myEditableContent<span class="pl-pds">"</span></span> contentEditable<span class="pl-k">&gt;&lt;/</span>div<span class="pl-k">&gt;</span>
+
+<span class="pl-k">&lt;</span>script type<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+te.newMentionListener(<span class="pl-s"><span class="pl-pds">'</span>myEditableContent<span class="pl-pds">'</span></span>, {
+    data<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>homer<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>marge<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>maggie<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>lisa<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>bort<span class="pl-pds">'</span></span>],
+});
+<span class="pl-k">&lt;/</span>script<span class="pl-k">&gt;</span></pre></div>
+
+<h1>
+<a id="notable-features" class="anchor" href="#notable-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Notable features</h1>
+
+<ul>
+<li>No dependencies. Zero.</li>
+<li>Only 2 KB (compressed)</li>
+<li>IE9+ compatibility</li>
+<li>Works with contentEditable and textareas</li>
+<li>Plugable - easiliy add additional support and custom views</li>
+<li>Trigger character is configurable, not just '@'</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Vesperjs maintained by <a href="https://github.com/tyleregeto">tyleregeto</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
