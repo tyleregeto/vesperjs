@@ -32,9 +32,9 @@
 	});
 
 	// Add emoji completion
-	te.newMentionListener('textbox', {
-		triggerCharacter: ':',
-		insertTmpl: ':{value}:',
+	te.newMentionListener('textbox2', {
+		triggerCharacter: '#',
+		insertTmpl: '<a href="#" class="te-tag">#{value}</a>',
 		data: ['smile', 'shrug', 'dog', 'kitten', 'OddJob'],
 	});
 	</script>

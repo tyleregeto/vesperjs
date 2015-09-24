@@ -204,8 +204,8 @@ te.newMentionTextareaPlugin = function(textarea) {
         // TODO currently we position it to the text area bottom-left,
         // we should return the real x/y position. We can do this with
         // an (gross) off screen div with the same styles.
-        var rect = textarea.getClientRects()[0];
-        return {top: rect.bottom, left: rect.left};
+        var rect = textarea.getBoundingClientRect();
+        return {top: rect.bottom + window.scrollY, left: rect.left + window.scrollX};
     }
 };
 
@@ -286,11 +286,8 @@ te.newMentionContentEditablePlugin = function() {
         range.cloneRange();
         range.setStart(range.startContainer, start);
 
-        var bounds = range.getClientRects();
-        if(bounds && bounds[0]) {
-            return {top: bounds[0].top, left: bounds[0].left};
-        }
-        return {left:0, top:0};
+        var rect = range.getBoundingClientRect();
+        return {top: rect.top + window.scrollY, left: rect.left + window.scrollX};
     }
 };
 
@@ -354,8 +351,8 @@ te.newMentionListView = function(onItemSelect /*func*/, spec) {
             return;
         }
 
-        wrapper.style.top = position.top;
-        wrapper.style.left = position.left;
+        wrapper.style.top = position.top + 'px';
+        wrapper.style.left = position.left + 'px';
 
         // add new matches
         for (var i = 0; i < items.length; i++) {
