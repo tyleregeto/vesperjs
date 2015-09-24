@@ -6,6 +6,7 @@
     "grunt-cli": "latest",
     "grunt-contrib-sass": "latest",
     "grunt-contrib-uglify": "latest",
+    "grunt-string-replace": "^1.2.0",
     "gruntify-eslint": "^1.0.1"
   }
 }

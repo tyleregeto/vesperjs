@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('gruntify-eslint');
+    grunt.loadNpmTasks('grunt-string-replace');
 
     grunt.initConfig({
         sass: {
@@ -28,8 +29,19 @@ module.exports = function(grunt) {
             },
             src: 'main.js',  
         },
+        'string-replace': {
+            files: {
+                './dist/main.min.js': './dist/main.min.js',
+            },
+            options: {
+                replacements: [{
+                    pattern: '"use strict";',
+                    replacement: 'x',
+                }],
+            },
+        },
     });
 
-    grunt.registerTask('default', ['sass', 'eslint', 'uglify']);
+    grunt.registerTask('default', ['sass', 'eslint', 'uglify', 'string-replace']);
     grunt.registerTask('dev', ['sass', 'uglify']);
 };
