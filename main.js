@@ -311,6 +311,7 @@ te.newMentionListView = function(onItemSelect /*func*/, spec) {
     list.addEventListener('click', onListClick);
 
     wrapper.className = 'te-mentions-list ' + (spec.className || '');
+    wrapper.style.display = 'none';
     wrapper.appendChild(list);
 
     document.body.appendChild(wrapper);
@@ -348,11 +349,13 @@ te.newMentionListView = function(onItemSelect /*func*/, spec) {
 
         // if not matches, exit
         if(!isVisible) {
+            wrapper.style.display = 'none';
             return;
         }
 
         wrapper.style.top = position.top + 'px';
         wrapper.style.left = position.left + 'px';
+        wrapper.style.display = 'block';
 
         // add new matches
         for (var i = 0; i < items.length; i++) {
@@ -370,7 +373,7 @@ te.newMentionListView = function(onItemSelect /*func*/, spec) {
         }
     }
 
-    function moveCusor(index) {
+    function moveCusor(index, isDown) {
         var activeItem = null;
         var prevPos = cursorPos;
         cursorPos = index;
@@ -402,7 +405,8 @@ te.newMentionListView = function(onItemSelect /*func*/, spec) {
             if(typeof(activeItem.scrollIntoViewIfNeeded) === 'function') {
                 activeItem.scrollIntoViewIfNeeded(false);
             } else {
-                activeItem.scrollIntoView(false);
+                var d = isDown ? "end" : "start";
+                activeItem.scrollIntoView({block: d, behavior: "smooth"});
             }
         }
     }
@@ -424,7 +428,7 @@ te.newMentionListView = function(onItemSelect /*func*/, spec) {
         switch(e.keyCode) {
         case 38:
             handled = true;
-            moveCusor(cursorPos - 1);
+            moveCusor(cursorPos - 1, true);
             break;
         case 40:
             handled = true;
