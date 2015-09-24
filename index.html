@@ -55,7 +55,7 @@ te.newMentionListener(<span class="pl-s"><span class="pl-pds">'</span>myEditable
 <h2>
 <a id="demos" class="anchor" href="#demos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h2>
 
-<h2><small>(type '@')</small></h2>
+<small>type '@' or '#' to trigger autocompletion</small>
 <div id="myContentEditable" class="te-content-editable" contentEditable placeholder="Type here..."></div>
 
 
@@ -65,6 +65,13 @@ te.newMentionListener('myContentEditable', {
     triggerCharacter: '@',
     insertTmpl: '<a href="#">@{value}</a>',
     data: ["homer", "marge", "maggie", "lisa", "bort"],
+});
+
+te.newMentionListener('myContentEditable', {
+    triggerCharacter: '#',
+    spaceAfterInsert: true,
+    insertTmpl: '<a href="#" class="te-tag">#{value}</a>',
+    data: ['jaws', 'blofeld', 'oddjob', 'goldfinger', 'drax'],
 });
 </script>
 
