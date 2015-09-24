@@ -1,35 +1,36 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Vesperjs by tyleregeto</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Vesperjs</h1>
-        <p>A library for adding mention auto complete/insertion, ie @username #tag :emoji</p>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <p class="view"><a href="https://github.com/tyleregeto/vesperjs">View the Project on GitHub <small>tyleregeto/vesperjs</small></a></p>
+    <link rel="stylesheet" type="text/css" href="example/example.css">
+    <link rel="stylesheet" type="text/css" href="example/main.css">
+</head>
 
+<body>
+<div class="wrapper">
+<header>
+    <h1>Vesperjs</h1>
+    <p>A library for adding mention auto completion/insertion, ie @username #tag :emoji</p>
 
-        <ul>
-          <li><a href="https://github.com/tyleregeto/vesperjs/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/tyleregeto/vesperjs/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/tyleregeto/vesperjs">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started</h1>
+    <p class="view"><a href="https://github.com/tyleregeto/vesperjs">View the Project on GitHub <small>tyleregeto/vesperjs</small></a></p>
+
+    <ul>
+        <li><a href="https://github.com/tyleregeto/vesperjs/zipball/master">Download <strong>ZIP File</strong></a></li>
+        <li><a href="https://github.com/tyleregeto/vesperjs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+        <li><a href="https://github.com/tyleregeto/vesperjs">View On <strong>GitHub</strong></a></li>
+    </ul>
+</header>
+
+<section>
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started</h2>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>div id<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>myEditableContent<span class="pl-pds">"</span></span> contentEditable<span class="pl-k">&gt;&lt;/</span>div<span class="pl-k">&gt;</span>
 
@@ -39,24 +40,42 @@ te.newMentionListener(<span class="pl-s"><span class="pl-pds">'</span>myEditable
 });
 <span class="pl-k">&lt;/</span>script<span class="pl-k">&gt;</span></pre></div>
 
-<h1>
-<a id="notable-features" class="anchor" href="#notable-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Notable features</h1>
+<h2>
+<a id="notable-features" class="anchor" href="#notable-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Notable features</h2>
 
 <ul>
-<li>No dependencies. Zero.</li>
-<li>Only 2 KB (compressed)</li>
-<li>IE9+ compatibility</li>
-<li>Works with contentEditable and textareas</li>
-<li>Plugable - easiliy add additional support and custom views</li>
-<li>Trigger character is configurable, not just '@'</li>
+    <li>No dependencies. Zero.</li>
+    <li>Only 2 KB (compressed)</li>
+    <li>IE9+ compatibility</li>
+    <li>Works with contentEditable and textareas</li>
+    <li>Pluggable - easily add additional support and custom views</li>
+    <li>Trigger character is configurable, not just '@'</li>
 </ul>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/tyleregeto">tyleregeto</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
+
+<h2>
+<a id="demos" class="anchor" href="#demos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h2>
+
+<h2><small>(type '@')</small></h2>
+<div id="myContentEditable" class="te-content-editable" contentEditable placeholder="Type here..."></div>
+
+
+<script type="text/javascript" src="example/main.min.js"></script>
+<script type="text/javascript">
+te.newMentionListener('myContentEditable', {
+    triggerCharacter: '@',
+    insertTmpl: '<a href="#">@{value}</a>',
+    data: ["homer", "marge", "maggie", "lisa", "bort"],
+});
+</script>
+
+</section>
+<footer>
+    <p>This project is maintained by <a href="https://github.com/tyleregeto">tyleregeto</a></p>
+    <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+</footer>
+</div>
+
+<script src="javascripts/scale.fix.js"></script>
     
-  </body>
+</body>
 </html>

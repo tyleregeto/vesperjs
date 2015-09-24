@@ -1,0 +1,19 @@
+* {
+	box-sizing: border-box;
+}
+
+.te-content-editable {
+	width: 500px;
+	max-width: 100%;
+	min-height: 150px;
+	padding: 10px;
+	box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
+	margin-top: 20px;
+	font: normal normal normal 13.3333330154419px/normal Arial;
+	font-family: monospace;
+}
+
+.te-tag {
+	border: solid 1px #999;
+	display: inline-block;
+}
