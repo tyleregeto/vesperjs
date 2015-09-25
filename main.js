@@ -1,10 +1,8 @@
 'use strict';
 
-// TODO deleting needs to cleanup mention tags (contentEditable)
 // TODO after insert, a single back space should remove the last name, a second backspace should remove everything up to the '@' character
 // TODO support callback match finding, needs to work with AJAX requests
 // TODO iframe support (eg: CKEditor)
-// TOOD sanitize values before inserting into template (make it a config setting, default on)
 // TODO document plugin API and view API and config settings
 // TODO expect a className for identifying inserts later
 
