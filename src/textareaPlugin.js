@@ -27,9 +27,6 @@ te.mentions.newTextareaPlugin = function(textarea/*, spec*/) {
     }
 
     function getMenuPosition(/*start*/) {
-        // TODO currently we position it to the text area bottom-left,
-        // we should return the real x/y position. We can do this with
-        // an (gross) off screen div with the same styles.
         var rect = textarea.getBoundingClientRect();
         return {top: rect.bottom + window.scrollY, left: rect.left + window.scrollX};
     }

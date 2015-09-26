@@ -23,10 +23,7 @@ te.mentions.newContentEditablePlugin = function(contentEditable, spec) {
         if(deleteStyle === style.All || e.keyCode !== 8) {
             return;
         }
-
-        // TODO check if the next element is a mention tag
-        // TODO if mention tag do delete style
-
+        
         e.preventDefault();
     }
 
