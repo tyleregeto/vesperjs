@@ -12,14 +12,14 @@ module.exports = function(grunt) {
                 options: {
                     style: 'compressed',
                 },
-                src: ['main.scss'],
+                src: ['./src/main.scss'],
                 dest: './dist/main.css',
             },
         },
         uglify: {
             js: {
                 files: {
-                    './dist/main.min.js': ['main.js'],
+                    './dist/main.min.js': ['src/main.js', 'src/**.js'],
                 },
             },
         },
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
             options: {
                 config: '.eslintrc',
             },
-            src: 'main.js',  
+            src: './src/**.js',  
         },
         // strip 'use strict' from dist built. People _should_ use it globally
         // but we don't want to force out good behaviour onto others.
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
             './dist/main.min.js': ['./dist/main.min.js'],
             options: {
                 replacements: [{
-                    pattern: '"use strict";',
+                    pattern: new RegExp('"use strict";', 'g'),
                     replacement: '',
                 }],
             },

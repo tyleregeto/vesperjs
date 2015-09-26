@@ -3,7 +3,7 @@
 	<title>vesperjs demo</title>
 	<link rel="stylesheet" type="text/css" href="example.css">
 	<link rel="stylesheet" type="text/css" href="../dist/main.css">
-	<script type="text/javascript" src="../main.js"></script>
+	<script type="text/javascript" src="../dist/main.min.js"></script>
 </head>
 <body>
 	<header>
@@ -19,24 +19,32 @@
 
 	<script type="text/javascript">
 	// Add username completion
-	te.newMentionListener('textbox', {
+	te.mentions.newListener('textbox', {
 		triggerCharacter: '@',
 		data: ["bob", "sam", "bort", "homer", "marge", "maggie", "lisa", "sean connery", "timothy dalton", "roger moore"],
 	});
 
 	// Add username completion to contentEdtable
-	te.newMentionListener('textbox2', {
+	te.mentions.newListener('textbox2', {
 		triggerCharacter: '@',
-		insertTmpl: '<a href="#">@{value}</a>',
+		insertTmpl: '<div class="te-mention"><a href="#"><img src="http://lorempixel.com/20/20/" width="15" height="15" /><strong>@{value}</strong></a></div>',
 		data: ["bob", "sam", "bort", "bort2", "homer", "marge", "maggie", "lisa", "sean connery", "timothy dalton", "roger moore"],
 	});
 
 	// Add emoji completion
-	te.newMentionListener('textbox2', {
+	te.mentions.newListener('textbox2', {
 		triggerCharacter: '#',
 		insertTmpl: '<a href="#" class="te-tag">#{value}</a>',
-		data: ['smile', 'shrug', 'dog', 'kitten', 'OddJob'],
+		data: loadMentionData,
 	});
+
+	function loadMentionData(term, callback) {
+		// simulate an HTTP request
+		setTimeout(function() {
+			callback(['smile', 'shrug', 'dog', 'kitten', 'OddJob']);
+		}, 250);
+	}
+
 	</script>
 </body>
 </html>

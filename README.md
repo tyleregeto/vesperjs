@@ -1,5 +1,5 @@
 # vesperjs
-A library for adding mention autocomplete/insertion, ie @user #tag :emoji
+A library for adding mention autocompletion/insertion, ie @user #tag :emoji
 
 # Getting started
 
@@ -7,7 +7,7 @@ A library for adding mention autocomplete/insertion, ie @user #tag :emoji
 <div id="myEditableContent" contentEditable></div>
 
 <script type="text/javascript">
-te.newMentionListener('myEditableContent', {
+te.mentions.newListener('myEditableContent', {
 	data: ['homer', 'marge', 'maggie', 'lisa', 'bort'],
 });
 </script>
@@ -15,8 +15,8 @@ te.newMentionListener('myEditableContent', {
 
 # Notable features
 - No dependencies. Zero.
-- Only 2 KB (compressed)
+- Only 2.5 KB (compressed)
 - IE9+ compatibility
 - Works with contentEditable and textareas
-- Plugable - easiliy add additional support and custom views
+- Plugable - easily add additional support and custom views
 - Trigger character is configurable, not just '@'

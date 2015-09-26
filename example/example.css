@@ -38,6 +38,10 @@ textarea {
 	font-family: monospace;
 }
 
+.te-mention {
+	display: inline-block;
+}
+
 .te-tag {
 	border: solid 1px #999;
     display: inline-block;
