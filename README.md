@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tyleregeto/vesperjs.svg?branch=master)](https://travis-ci.org/tyleregeto/vesperjs)
+
 # vesperjs
 A library for adding mention autocompletion/insertion, ie @user #tag :emoji
 
