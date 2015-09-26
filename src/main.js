@@ -1,17 +1,5 @@
 'use strict';
 
-// TODO backspace options
-    // - delete whole thing
-    // - delete mention, replace with text content - last character
-    // - delete up to first space of text content, keep the rest in place 
-// TODO hide menu on field focus lost
-// TODO support callback match finding, needs to work with AJAX requests
-// TODO iframe support (eg: CKEditor)
-// TODO Firefox scrollIntoView behaviour is funny at bottom of page
-// TODO test IE, Safari, iOS
-// TODO list view needs to make sure its within screen bounds
-// TODO document plugin API and view API and config settings
-
 var te = te || {};
 te.mentions = {};
 
