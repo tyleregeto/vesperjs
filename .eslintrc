@@ -13,5 +13,12 @@
         "browser": true
     },
     "extends": "eslint:recommended",
-	"globals": {"te":true}
+	"globals": {
+        "te":true,
+
+        // for tests
+        casper: true,
+        addEl: true,
+        el: true,
+    }
 }

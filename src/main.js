@@ -75,13 +75,20 @@ te.mentions.newListener = function(targetNode /*node or ID*/, spec) {
         target.addEventListener('input', requestAutoComplete);
         target.addEventListener('click', requestAutoComplete);
         target.addEventListener('keydown', onKeyDown);
+        target.addEventListener('blur', onTargetFocusLost);
     }
 
     function destory() {
         target.removeEventListener('input', requestAutoComplete);
         target.removeEventListener('click', requestAutoComplete);
         target.removeEventListener('keydown', onKeyDown);
+        target.removeEventListener('blur', onTargetFocusLost);
         view.destory();
+    }
+
+    function onTargetFocusLost() {
+        // clear the list view
+        view.setList([]);
     }
 
     function onKeyDown(e) {

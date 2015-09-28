@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "devDependencies": {
     "grunt": "latest",
+    "grunt-casperjs": "^2.1.0",
     "grunt-cli": "latest",
     "grunt-contrib-sass": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-string-replace": "^1.2.0",
-    "gruntify-eslint": "^1.0.1"
+    "gruntify-eslint": "^1.0.1",
+    "phantomjs": "^1.9.18"
   }
 }
