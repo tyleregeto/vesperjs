@@ -1,4 +1,4 @@
-'uses strict';
+'use strict';
 
 function el(type, attrs) {
     var e = document.createElement(type);
