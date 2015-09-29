@@ -4,6 +4,7 @@ before_install:
   - gem install sass
 
 before_script:
+  - npm install -g casperjs
   - npm install -g grunt
   - npm install eslint
   - npm install

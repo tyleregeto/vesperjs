@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('gruntify-eslint');
     grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks('grunt-casperjs');
 
     grunt.initConfig({
         sass: {
@@ -40,8 +41,14 @@ module.exports = function(grunt) {
                 }],
             },
         },
+        casperjs: {
+            options: {
+                casperjsOptions: ['--web-security=no'],
+            },
+            files: ['test/*Tests.js'],
+        },
     });
 
-    grunt.registerTask('default', ['sass', 'eslint', 'uglify', 'string-replace']);
-    grunt.registerTask('dev', ['sass', 'uglify']);
+    grunt.registerTask('default', ['sass', 'eslint', 'uglify', 'string-replace', 'casperjs']);
+    grunt.registerTask('dev', ['sass', 'uglify', 'casperjs']);
 };
