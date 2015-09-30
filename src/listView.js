@@ -79,6 +79,13 @@ te.mentions.newListView = function(onItemSelect /*func*/, spec) {
             list.appendChild(listItem);
             listItems.push(listItem);
         }
+
+        var bounds = wrapper.getBoundingClientRect();
+        var width = document.body.clientWidth;
+        if(bounds.left + bounds.width > width) {
+            var diff = bounds.left + bounds.width - width;
+            wrapper.style.left = (position.left - (diff)) + 'px';
+        }
     }
 
     function moveCusor(index, isDown) {
